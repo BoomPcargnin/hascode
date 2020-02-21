@@ -1,0 +1,41 @@
+const getBetterLibraries = (daysCount, libraries) => {
+    const newLibraries = JSON.parse(JSON.stringify(libraries));
+    
+    newLibraries.sort((a, b) => {
+      a.books.sort((kk, kk1) => kk1.score - kk.score);
+      b.books.sort((kk, kk1) => kk1.score - kk.score);
+  
+      const aSignup = a.signupDays;
+      const aBookPerDays = a.booksPerDay;
+  
+      const bSignup = a.signupDays;
+      const bBookPerDays = a.booksPerDay;
+
+      const aDays = daysCount - aSignup * aBookPerDays;
+      const bDays = daysCount - bSignup * bBookPerDays;
+  
+      const aScore = a.books
+        .reduce((acc, book) => acc + book.score, 0);
+  
+      const bScore = b.books
+        .reduce((acc, book) => acc + book.score, 0);
+  
+        return bScore / bDays - aScore / aDays;  
+    });
+  
+    return newLibraries;
+  }
+  
+  const solve = (parsed) => {
+    const { 
+        books,
+        daysCount,
+        libraries,
+    } = parsed;
+  
+    return {
+      libraries: getBetterLibraries(daysCount, libraries), 
+    };
+  }
+  
+  module.exports = solve;

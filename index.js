@@ -1,8 +1,13 @@
 const fs = require('fs');
 const path = require('path');
+const compute  =  require('./compute')
 
 const solve1 = require('./solve1');
 const solve2 = require('./solve2');
+const solve3 = require('./solve3');
+const solve4 = require('./solve4');
+const solve5 = require('./solve5');
+const solve6 = require('./solve6');
 
 const parse = (inputFile) => {
   const fileContent = fs.readFileSync(path.join(__dirname, 'inputs', inputFile), 'utf8');
@@ -42,7 +47,7 @@ const parse = (inputFile) => {
 }
 
 const solve = (parsed) => {
-  return solve2(parsed);
+  return solve6(parsed);
 };
 
 const output = (inputFile, solved) => {
@@ -53,13 +58,15 @@ const output = (inputFile, solved) => {
   const firstLine = libraries.length.toString();
   const otherLines = libraries.map((library) => `${library.id} ${library.books.length}\n${library.books.map(b => b.id).join(' ')}`).join('\n');
   const text = `${firstLine}\n${otherLines}`;
-  fs.writeFileSync(path.join(__dirname, 'outputs', `${inputFile}.out`), text, 'utf8');
+  fs.writeFileSync(path.join(__dirname, 'outputs2', `${inputFile}.out`), text, 'utf8');
 };
 
 
 const run = (inputFile) => {
   const parsed = parse(inputFile);
   const solved = solve(parsed);
+  const points = compute(parsed,solved);
+  console.log(points);
   output(inputFile, solved);
 };
 

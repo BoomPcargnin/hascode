@@ -1,4 +1,3 @@
-
 const getBetterLibraries = (daysCount, libraries) => {
   const newLibraries = JSON.parse(JSON.stringify(libraries));
   
