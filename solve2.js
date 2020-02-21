@@ -22,7 +22,6 @@ const getBetterLibraries = (daysCount, libraries) => {
 
       const aRealScore = aScore * -aSignup * Math.random();
       const bRealScore = bScore * -bSignup * Math.random();
-        
   
       return bRealScore - aRealScore;  
     });

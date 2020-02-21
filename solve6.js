@@ -15,9 +15,11 @@ const getBetterLibraries = (daysCount, libraries) => {
       const bDays = daysCount - bSignup * bBookPerDays;
   
       const aScore = a.books
+        .filter((_item, index) => index < (daysCount - aSignup) * aBookPerDays)
         .reduce((acc, book) => acc + book.score, 0);
   
       const bScore = b.books
+        .filter((_item, index) => index < (daysCount - bSignup) * bBookPerDays)
         .reduce((acc, book) => acc + book.score, 0);
   
         return bScore / bDays - aScore / aDays;  
