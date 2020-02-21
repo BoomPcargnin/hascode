@@ -1,32 +1,15 @@
-const compute = (parsed, result) => {
+  const compute = (parsed, result) => {
     const bookUsedIds = [];
+    const { libraries } = result;
     const { daysCount, books } = parsed;
-    let tmpDaysCount = daysCount;
-    const { libraries } = result;
-    let points = 0;
-    libraries.forEach((library) => {
-      const daysForLibrary = tmpDaysCount - library.signupDays;
-      tmpDaysCount = daysForLibrary;
-      const booksForLibrary = daysForLibrary * library.booksPerDay;
-      const booksPoints = library.books.reduce((acc, book, index) => {
-        if (index > booksForLibrary) {
-          return acc;
-        }
-        if (!bookUsedIds.includes(book.id)) {
-          bookUsedIds.push(book.id);
-          acc = acc + book.score;
-        }
-        return acc;
-      }, 0);
-      points += booksPoints;
-    });
-    return points;
-  }
-
-  const computed1 = (parsed, result) => {
-    const bookUsedIds = [];
-    const { libraries } = result;
-    const { daysCount } = parsed;
+    const clonedBooks = JSON.parse(JSON.stringify(books));
+    clonedBooks.sort((a, b) => b.score - a.score);
+    const maxPoints = clonedBooks.reduce((acc, book, index) => {
+      if (index < daysCount) {
+        return acc + book.score;
+      }
+      return acc;
+    }, 0);
     let tmpDaysCount = daysCount;
     let points = 0;
     libraries.forEach((library) => {
@@ -39,7 +22,11 @@ const compute = (parsed, result) => {
         }
       })
     });
-    return points;
+    return { 
+      points,
+      maxPoints,
+      error: maxPoints - points,
+    };
   }
 
-  module.exports = computed1;
+  module.exports = compute;

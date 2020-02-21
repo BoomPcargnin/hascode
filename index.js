@@ -47,7 +47,7 @@ const parse = (inputFile) => {
 }
 
 const solve = (parsed) => {
-  return solve6(parsed);
+  return solve1(parsed);
 };
 
 const output = (inputFile, solved) => {
@@ -58,29 +58,38 @@ const output = (inputFile, solved) => {
   const firstLine = libraries.length.toString();
   const otherLines = libraries.map((library) => `${library.id} ${library.books.length}\n${library.books.map(b => b.id).join(' ')}`).join('\n');
   const text = `${firstLine}\n${otherLines}`;
-  fs.writeFileSync(path.join(__dirname, 'outputs2', `${inputFile}.out`), text, 'utf8');
+  fs.writeFileSync(path.join(__dirname, 'outputs', `${inputFile}.out`), text, 'utf8');
 };
 
 
 const run = (inputFile) => {
   const parsed = parse(inputFile);
   const solved = solve(parsed);
-  const points = compute(parsed,solved);
-  console.log(points);
+  const result = compute(parsed,solved);
   output(inputFile, solved);
+  return result;
 };
 
 const inputFiles = [
   'a_example.txt',
-  'b_read_on.txt',
-  'c_incunabula.txt',
-  'd_tough_choices.txt',
-  'e_so_many_books.txt',
-  'f_libraries_of_the_world.txt',
+  // 'b_read_on.txt',
+  // 'c_incunabula.txt',
+  // 'd_tough_choices.txt',
+  // 'e_so_many_books.txt',
+  // 'f_libraries_of_the_world.txt',
 ]
 
-inputFiles.map((inputFile) => {
+
+const endResult = inputFiles.map((inputFile) => {
   console.log(`Start: ${inputFile}`)
-  run(inputFile);
-  console.log(`End: ${inputFile}`)
+  const result = run(inputFile);
+  const { points, error } = result;
+  console.log(`End: ${inputFile}. Points: {${points} (error: ${error})`)
+  return result;
 })
+
+
+console.log('TOTAL points')
+console.log(endResult.reduce((acc, i) => {
+  return acc + i.points
+}, 0));
