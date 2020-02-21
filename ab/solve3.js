@@ -1,4 +1,6 @@
-const getBetterLibraries = (daysCount, libraries, bookScorePerDay) => {
+const compute = require('../compute');
+
+const getBetterLibraries = (daysCount, libraries) => {
   const newLibraries = JSON.parse(JSON.stringify(libraries));
   
   newLibraries.sort((a, b) => {
@@ -18,12 +20,9 @@ const getBetterLibraries = (daysCount, libraries, bookScorePerDay) => {
     const bBookScore = b.books
       .filter((_item, index) => index < bTotalBooks)
       .reduce((acc, book) => acc + book.score, 0);
-
-    const aPenalty = aSignup * bookScorePerDay;
-    const bPenalty = aSignup * bookScorePerDay;
   
-    const aScore = aBookScore - aPenalty;
-    const bScore = bBookScore - bPenalty;
+    const aScore = (1 / aSignup) * aBookScore;
+    const bScore = (1 / bSignup) * bBookScore;
   
     if (bScore > aScore) {
       return 1;
@@ -43,10 +42,8 @@ const solve = (parsed) => {
       libraries,
   } = parsed;
 
-  const bookScorePerDay = books.reduce((acc, b) => acc + b.score, 10) / daysCount;
-
   return {
-    libraries: getBetterLibraries(daysCount, libraries, bookScorePerDay), 
+    libraries: getBetterLibraries(daysCount, libraries), 
   };
 }
 

@@ -9,6 +9,10 @@ const solve4 = require('./solve4');
 const solve5 = require('./solve5');
 const solve6 = require('./solve6');
 
+const abSolve1 = require('./ab/solve1');
+const abSolve2 = require('./ab/solve2');
+const abSolve3 = require('./ab/solve3');
+
 const parse = (inputFile) => {
   const fileContent = fs.readFileSync(path.join(__dirname, 'inputs', inputFile), 'utf8');
   const [firstLine, secondLine, ...rest] = fileContent.split('\n');
@@ -39,6 +43,11 @@ const parse = (inputFile) => {
     return acc;
   }, []);
 
+  const booksArray = books.map((b) => b.score);
+  booksArray.sort((a, b) => b - a);
+  const ipoteticalMaxPoints = booksArray.reduce((acc, i) => acc + i);
+  console.log(`Ipotetical MaxPoints: ${ipoteticalMaxPoints}`)
+
   return {
     books,
     daysCount,
@@ -47,7 +56,7 @@ const parse = (inputFile) => {
 }
 
 const solve = (parsed) => {
-  return solve1(parsed);
+  return abSolve3(parsed);
 };
 
 const output = (inputFile, solved) => {
@@ -72,19 +81,19 @@ const run = (inputFile) => {
 
 const inputFiles = [
   'a_example.txt',
-  // 'b_read_on.txt',
-  // 'c_incunabula.txt',
-  // 'd_tough_choices.txt',
-  // 'e_so_many_books.txt',
-  // 'f_libraries_of_the_world.txt',
+  'b_read_on.txt',
+  'c_incunabula.txt',
+  'd_tough_choices.txt',
+  'e_so_many_books.txt',
+  'f_libraries_of_the_world.txt',
 ]
 
 
 const endResult = inputFiles.map((inputFile) => {
   console.log(`Start: ${inputFile}`)
   const result = run(inputFile);
-  const { points, error } = result;
-  console.log(`End: ${inputFile}. Points: {${points} (error: ${error})`)
+  const { points, error, percent } = result;
+  console.log(`End: ${inputFile}. Points: ${points} (error: ${error} [${percent.toFixed(2)}%])`)
   return result;
 })
 

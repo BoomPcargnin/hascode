@@ -4,12 +4,7 @@
     const { daysCount, books } = parsed;
     const clonedBooks = JSON.parse(JSON.stringify(books));
     clonedBooks.sort((a, b) => b.score - a.score);
-    const maxPoints = clonedBooks.reduce((acc, book, index) => {
-      if (index < daysCount) {
-        return acc + book.score;
-      }
-      return acc;
-    }, 0);
+    const ipoteticalMaxPoints = clonedBooks.reduce((acc, book) => acc + book.score, 0)
     let tmpDaysCount = daysCount;
     let points = 0;
     libraries.forEach((library) => {
@@ -24,8 +19,9 @@
     });
     return { 
       points,
-      maxPoints,
-      error: maxPoints - points,
+      ipoteticalMaxPoints,
+      error: ipoteticalMaxPoints - points,
+      percent: (points / ipoteticalMaxPoints) * 100
     };
   }
 
