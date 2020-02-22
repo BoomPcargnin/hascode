@@ -12,6 +12,7 @@ const solve6 = require('./solve6');
 const abSolve1 = require('./ab/solve1');
 const abSolve2 = require('./ab/solve2');
 const abSolve3 = require('./ab/solve3');
+const abSolve4 = require('./ab/solve4');
 
 const parse = (inputFile) => {
   const fileContent = fs.readFileSync(path.join(__dirname, 'inputs', inputFile), 'utf8');
@@ -56,7 +57,7 @@ const parse = (inputFile) => {
 }
 
 const solve = (parsed) => {
-  return abSolve3(parsed);
+  return abSolve4(parsed);
 };
 
 const output = (inputFile, solved) => {
