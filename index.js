@@ -13,6 +13,7 @@ const abSolve1 = require('./ab/solve1');
 const abSolve2 = require('./ab/solve2');
 const abSolve3 = require('./ab/solve3');
 const abSolve4 = require('./ab/solve4');
+const abSolve5 = require('./ab/solve5');
 
 const parse = (inputFile) => {
   const fileContent = fs.readFileSync(path.join(__dirname, 'inputs', inputFile), 'utf8');
